@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+{% block title %}<title>Social Transcendence Main Page</title>{% endblock %}
+
+
+{% block content %}
+<h1>Social Transcendence Home</h1>
+
+<p>Welcome to <em>Social Transcendence</em></p>
+
+<h2>Dynamic content</h2>
+
+<p>The library has the following record counts:</p>
+<ul>
+    <li><strong>Social:</strong> Transcendence</li>
+
+</ul>
+<p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+{% endblock %}
