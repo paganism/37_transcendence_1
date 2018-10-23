@@ -14,3 +14,15 @@ def index(request):
         context={
         },
     )
+
+
+def profile(request):
+    """
+    function for index page
+    """
+    return render(
+        request,
+        'profile.html',
+        context={
+        },
+    )

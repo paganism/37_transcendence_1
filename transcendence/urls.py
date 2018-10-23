@@ -34,3 +34,4 @@ urlpatterns += [
 urlpatterns += [
         path('user/', include('django.contrib.auth.urls')),
 ]
+
