@@ -24,7 +24,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('index/', include('auth.urls')),
+    path('', include('auth.urls')),
 ]
 
 urlpatterns += [
@@ -32,6 +32,5 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-        path('user/', include('django.contrib.auth.urls')),
+        path('accounts/', include('django.contrib.auth.urls')),
 ]
-

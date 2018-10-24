@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>User {{ user.username }}</h1>
+
+<p>This is a personal page of {{ user.username }}<em> Social Transcendence</em></p>
+
+<p>Some profile data: </p>
+<ul>
+    <li>{{ user.email }}</li>
+    <li>{{ user.last_login }}</li>
+    <li>{{ user.date_joined }}</li>
+</ul>
+<p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+{% endblock %}
