@@ -6,6 +6,10 @@
 <p>This is a personal page of {{ user.username }}<em> Social Transcendence</em></p>
 
 <p>Some profile data: </p>
+<p>{{request.path}}</p>
+<p>{{request.user}}</p>
+<p>{{ user.is_authenticated }}</p>
+<p>{{ user.is_anonymous }}</p>
 <ul>
     <li>{{ user.email }}</li>
     <li>{{ user.last_login }}</li>

@@ -5,28 +5,22 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 
 
-def index(request):
-    """
-    function for index page
-    """
-    return render(
-        request,
-        'index.html',
-        context={
-        },
-    )
+class IndexView(generic.TemplateView):
+    template_name = "index.html"
 
 
-def user_profile(request, pk):
-    """
-    function for user page
-    """
-    # user = get_object_or_404(User, pk=pk)
-    user = 2
-    return render(
-        request,
-        'user_profile.html',
-        context={
-            'user': user
-        },
-    )
+class UserProfileView(LoginRequiredMixin, generic.DetailView):
+
+    model = User
+
+    # @login_required
+    def book_detail_view(self, request, pk):
+        try:
+            user_id = User.objects.get(pk=pk)
+        except User.DoesNotExists:
+            raise Http404("User does not exists")
+        return render(
+            request,
+            'templates/user_detail.html',
+            context={'user': user_id}
+        )

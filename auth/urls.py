@@ -1,11 +1,10 @@
 from django.urls import include, path
 
-from . import views
+from .views import IndexView, UserProfileView
 
 urlpatterns = [
-        path('', views.index, name='index'),
-        path('index/', views.index, name='index'),
+        path('', IndexView.as_view(), name='index'),
     ]
 urlpatterns += [
-        path('user/<pk>/', views.user_profile, name='user_profile'),
+        path('user/<pk>/', UserProfileView.as_view(), name='user_profile'),
 ]

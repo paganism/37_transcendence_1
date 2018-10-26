@@ -115,6 +115,7 @@ class BaseConf(Configuration):
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     # LOGIN_REDIRECT_URL = '/'
+    LOGIN_URL = '/accounts/login/'
 
 
 class Dev(BaseConf):

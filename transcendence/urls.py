@@ -27,9 +27,9 @@ urlpatterns += [
     path('', include('auth.urls')),
 ]
 
-urlpatterns += [
-    path('', RedirectView.as_view(url='/index/', permanent=True)),
-]
+# urlpatterns += [
+#     path('', RedirectView.as_view(url='/index/', permanent=True)),
+# ]
 
 urlpatterns += [
         path('accounts/', include('django.contrib.auth.urls')),
