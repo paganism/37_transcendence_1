@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.views.generic import RedirectView
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -27,10 +28,15 @@ urlpatterns += [
     path('', include('auth.urls')),
 ]
 
-# urlpatterns += [
-#     path('', RedirectView.as_view(url='/index/', permanent=True)),
-# ]
+urlpatterns += [
+    path('', RedirectView.as_view(url='accounts/login/', permanent=True)),
+]
 
 urlpatterns += [
-        path('accounts/', include('django.contrib.auth.urls')),
+        path('accounts/logout/', include('django.contrib.auth.urls')),
 ]
+# urlpatterns += [
+#     path('accounts/login/', auth_views.LoginView.as_view(
+#         template_name='auth/templates/registration/login.html',
+#         authentication_form='LoginForm')),
+# ]

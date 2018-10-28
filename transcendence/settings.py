@@ -114,7 +114,7 @@ class BaseConf(Configuration):
 
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    # LOGIN_REDIRECT_URL = '/'
+    # LOGIN_REDIRECT_URL = ('user_profile', request.user.id)
     LOGIN_URL = '/accounts/login/'
 
 
