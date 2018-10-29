@@ -12,6 +12,15 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 from configurations import Configuration, values
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+import raven
+
+
+# sentry_sdk.init(
+#     dsn="https://cfcda0ab3c1b4fc9bdc7a3dd139e75ac@sentry.io/1305643",
+#     integrations=[DjangoIntegration()]
+# )
 
 
 class BaseConf(Configuration):
@@ -36,6 +45,7 @@ class BaseConf(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        'raven.contrib.django.raven_compat',
     ]
 
     MIDDLEWARE = [
@@ -46,6 +56,8 @@ class BaseConf(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware',
+        'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware',
     ]
 
     ROOT_URLCONF = 'transcendence.urls'
@@ -116,6 +128,59 @@ class BaseConf(Configuration):
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     # LOGIN_REDIRECT_URL = ('user_profile', request.user.id)
     LOGIN_URL = '/accounts/login/'
+
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': True,
+        'root': {
+            'level': 'WARNING',
+            'handlers': ['sentry'],
+        },
+        'formatters': {
+            'verbose': {
+                'format': '%(levelname)s  %(asctime)s  %(module)s '
+                          '%(process)d  %(thread)d  %(message)s'
+            },
+        },
+        'handlers': {
+            'sentry': {
+                'level': 'ERROR',  # To capture more than ERROR, change to WARNING, INFO, etc.
+                'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+                'tags': {'custom-tag': 'x'},
+            },
+            'console': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+                'formatter': 'verbose'
+            }
+        },
+        'loggers': {
+            'django.db.backends': {
+                'level': 'ERROR',
+                'handlers': ['console'],
+                'propagate': False,
+            },
+            'raven': {
+                'level': 'DEBUG',
+                'handlers': ['console'],
+                'propagate': False,
+            },
+            'sentry.errors': {
+                'level': 'DEBUG',
+                'handlers': ['console'],
+                'propagate': False,
+            },
+        },
+    }
+
+    RAVEN_CONFIG = {
+    'dsn': 'https://cfcda0ab3c1b4fc9bdc7a3dd139e75ac:897e76c10bd04583b1bad4e8ac71e4d9@sentry.io/1305643',
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(os.path.abspath(os.curdir)),
+        }
+
+    SENTRY_CLIENT = 'raven.contrib.django.raven_compat.DjangoClient'
 
 
 class Dev(BaseConf):

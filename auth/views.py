@@ -67,7 +67,12 @@ class UserProfileView(LoginRequiredMixin, generic.DetailView):
     def user_detail_view(self, request, pk):
         try:
             user_id = User.objects.get(pk=pk)
+            logger.error('There was some crazy error', exc_info=True, extra={
+                'request': request,
+            })
         except User.DoesNotExists:
+
+
             raise Http404("User does not exists")
         return render(
             request,
