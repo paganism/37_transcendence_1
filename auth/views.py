@@ -18,29 +18,16 @@ class IndexView(generic.TemplateView):
 
 
 def login_view(request):
-    print('HERE_0')
     if request.method == 'POST':
-        print('HERE_1')
         form = LoginForm(request.POST)
         if form.is_valid():
-            print('HERE_3')
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-            print('HERE_4')
-            print(user)
             if user:
-                print('HERE_6')
                 login(request, user)
-                # model = User
-                # print(request.username)
-                print(request.user.id)
-                # print(request.user.id)
-                # print(request.user.id)
-
                 return redirect('user_profile', request.user.id)
             # else:
             #     return render(request, 'registration/login.html')
     else:
-        print('HERE_5')
         form = LoginForm()
     return render(request, 'registration/login.html', {'form': form})
 

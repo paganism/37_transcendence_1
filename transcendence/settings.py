@@ -12,9 +12,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 from configurations import Configuration, values
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
 import raven
+from re import compile
 
 
 # sentry_sdk.init(
@@ -123,9 +122,9 @@ class BaseConf(Configuration):
 
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
-    STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    STATIC_URL = '/static/'
+
     # LOGIN_REDIRECT_URL = ('user_profile', request.user.id)
     LOGIN_URL = '/accounts/login/'
 
@@ -181,7 +180,9 @@ class BaseConf(Configuration):
         }
 
     SENTRY_CLIENT = 'raven.contrib.django.raven_compat.DjangoClient'
-
+    IGNORABLE_404_URLS = [
+           compile(r'^/favicon.ico$'),
+    ]
 
 class Dev(BaseConf):
     """development settings"""
