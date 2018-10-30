@@ -26,6 +26,12 @@ Here you should enter admin username and email
 ```
 $ python3 manage.py startapp auth
 ```
+# Deploy fabfile
+```
+
+fab bootstrap:host=root@80.211.16.55
+
+```
 # Project Goals
 
 The code is written for educational purposes. Training course for web-developers - [DEVMAN.org](https://devman.org)

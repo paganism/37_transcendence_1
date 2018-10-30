@@ -1,0 +1,14 @@
+[Unit]
+Description={{ PROJECT_NAME }} gunicorn daemon
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+Environment=DJANGO_DB_URI={{ DB_URI }}
+Environment=DJANGO_SECRET_KEY={{ SECRET_KEY }}
+WorkingDirectory={{ PROJECT_PATH }}
+ExecStart={{ VENV_DIR }}/bin/gunicorn --access-logfile - --workers 4 --bind unix:{{ PROJECT_PATH }}.sock {{ PROJECT_NAME }}.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
